@@ -1,0 +1,14 @@
+Value Storage and Transfer Systems:
+
+item = {
+title = { Small-Value Transfer Systems },
+url = { https://www.elibrary.imf.org/display/book/9781557753861/ch08.xml },
+group = { International Monetary Fund },
+also_known_as = { IMF },
+keywords = { },
+note = { },
+description = { },
+content = {
+
+},
+}
