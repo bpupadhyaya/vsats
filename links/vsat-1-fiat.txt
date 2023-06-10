@@ -1,14 +1,41 @@
 Value Storage and Transfer Systems:
 
 item = {
-title = { Small-Value Transfer Systems },
-url = { https://www.elibrary.imf.org/display/book/9781557753861/ch08.xml },
-group = { International Monetary Fund },
-also_known_as = { IMF },
-keywords = { },
-note = { },
-description = { },
-content = {
+ title = { },
+ url = { },
+ group = { },
+ also_known_as = { },
+ keywords = { },
+ note = { },
+ description = { },
+ derived_content = {
 
-},
+ },
+}
+
+item = {
+ title = { Small-Value Transfer Systems },
+ url = { https://www.elibrary.imf.org/display/book/9781557753861/ch08.xml },
+ group = { International Monetary Fund },
+ also_known_as = { IMF },
+ keywords = { },
+ note = { },
+ description = { },
+ derived_content = {
+  { payment_instruments = {cash payments, cashless payments, check payments, giro payments, direct debit payments, payment
+  cards } },
+ },
+}
+
+item = {
+ title = { FinCEN Advisory },
+ url = { https://www.fincen.gov/sites/default/files/advisory/advis33.pdf },
+ group = { US Dept. of Treasury Financial Crimes Enforcement Network},
+ also_known_as = { Treasury},
+ keywords = { Informal Value Transfer System (IVTS) },
+ note = { },
+ description = { },
+ derived_content = {
+    {IVTS = intermediary}
+ },
 }
