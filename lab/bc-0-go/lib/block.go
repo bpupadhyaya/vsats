@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Function to generate a hash of the block
+// Method to generate a hash of the block
 // Concatenate all the data and hash the result to obtain block hash
 func (block *Block) SetHash() {
 	timestamp := []byte(strconv.FormatInt(block.Timestamp, 10))
