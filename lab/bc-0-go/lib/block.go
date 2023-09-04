@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Method to generate a hash of the block
+// SetHash method to generate a hash of the block.
 // Concatenate all the data and hash the result to obtain block hash
 func (block *Block) SetHash() {
 	timestamp := []byte(strconv.FormatInt(block.Timestamp, 10))
@@ -16,14 +16,14 @@ func (block *Block) SetHash() {
 	block.MyBlockHash = hash[:]
 }
 
-// Create a function to generate new block and return that block
+// NewBlock function to generate new block and return that block
 func NewBlock(data string, prevBlockHash []byte) *Block {
 	block := &Block{time.Now().Unix(), prevBlockHash, []byte{}, []byte(data)}
 	block.SetHash()
 	return block
 }
 
-// Function to create the beginning block
+// NewBeginningBlock function to create the beginning block
 func NewBeginningBlock() *Block {
 	return NewBlock("data -> beginning block", []byte{})
 }
