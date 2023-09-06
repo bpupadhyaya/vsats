@@ -2,9 +2,12 @@ package wallet
 
 import (
 	"b-1-go/util"
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"crypto/sha512"
+	"golang.org/x/crypto/ripemd160"
 	"log"
 )
 
@@ -21,6 +24,7 @@ type Wallet struct {
 func NewWallet() *Wallet {
 	private, public := newKeyPair()
 	wallet := Wallet{private, public}
+
 	return &wallet
 }
 
@@ -37,22 +41,33 @@ func (w Wallet) GetAddress() []byte {
 
 // HashPublicKey hashes public key
 func HashPublicKey(publicKey []byte) []byte {
-	// TODO
+	publicSHA512 := sha512.Sum512(publicKey)
+	RIPEMD160Hasher := ripemd160.New()
+	_, err := RIPEMD160Hasher.Write(publicSHA512[:])
+	if err != nil {
+		log.Panic(err)
+	}
+	publicRIPEMD160 := RIPEMD160Hasher.Sum(nil)
 
-	return nil // TODO
+	return publicRIPEMD160
 }
 
 // ValidateAddress checks if address is valid
 func ValidateAddress(address string) bool {
-	// TODO
+	publicKeyHash := util.Base58Decode([]byte(address))
+	actualCheckSum := publicKeyHash[len(publicKeyHash)-addressChecksumLen:]
+	version := publicKeyHash[0]
+	publicKeyHash = publicKeyHash[1 : len(publicKeyHash)-addressChecksumLen]
+	targetCheckSum := CheckSum(append([]byte{version}, publicKeyHash...))
 
-	return false // TODO
+	return bytes.Compare(actualCheckSum, targetCheckSum) == 0
 }
 
 func CheckSum(payload []byte) []byte {
-	// TODO
+	firstSHA := sha512.Sum512(payload)
+	secondSHA := sha512.Sum512(firstSHA[:])
 
-	return nil // TODO
+	return secondSHA[:addressChecksumLen]
 }
 
 // newKeyPair generates private-public key pair
