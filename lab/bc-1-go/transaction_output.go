@@ -1,7 +1,6 @@
-package transaction
+package main
 
 import (
-	"b-1-go/util"
 	"bytes"
 	"encoding/gob"
 	"log"
@@ -15,7 +14,7 @@ type TxOutput struct {
 
 // Lock signs the output
 func (out *TxOutput) Lock(address []byte) {
-	publicKeyHash := util.Base58Decode(address)
+	publicKeyHash := Base58Decode(address)
 	publicKeyHash = publicKeyHash[1 : len(publicKeyHash)-4]
 	out.PublicKeyHash = publicKeyHash
 }

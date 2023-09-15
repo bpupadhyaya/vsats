@@ -1,7 +1,6 @@
-package wallet
+package main
 
 import (
-	"b-1-go/util"
 	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -34,7 +33,7 @@ func (w Wallet) GetAddress() []byte {
 	versionedPayload := append([]byte{version}, publicKeyHash...)
 	checkSum := CheckSum(versionedPayload)
 	fullPayload := append(versionedPayload, checkSum...)
-	address := util.Base58Encode(fullPayload)
+	address := Base58Encode(fullPayload)
 
 	return address
 }
@@ -54,7 +53,7 @@ func HashPublicKey(publicKey []byte) []byte {
 
 // ValidateAddress checks if address is valid
 func ValidateAddress(address string) bool {
-	publicKeyHash := util.Base58Decode([]byte(address))
+	publicKeyHash := Base58Decode([]byte(address))
 	actualCheckSum := publicKeyHash[len(publicKeyHash)-addressChecksumLen:]
 	version := publicKeyHash[0]
 	publicKeyHash = publicKeyHash[1 : len(publicKeyHash)-addressChecksumLen]

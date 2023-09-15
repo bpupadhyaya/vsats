@@ -1,7 +1,6 @@
-package transaction
+package main
 
 import (
-	"b-1-go/wallet"
 	"bytes"
 )
 
@@ -15,6 +14,6 @@ type TxInput struct {
 
 // UsesKey checks whether the address initiated the transaction
 func (in *TxInput) UsesKey(publicKeyHash []byte) bool {
-	lockingHash := wallet.HashPublicKey(in.PublicKey)
+	lockingHash := HashPublicKey(in.PublicKey)
 	return bytes.Compare(lockingHash, publicKeyHash) == 0
 }
