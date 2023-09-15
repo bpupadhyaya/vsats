@@ -19,14 +19,14 @@ type Block struct {
 
 // NewBlock creates and returns Block
 func NewBlock(transactions []*Transaction, prevBlockHash []byte, height int) *Block {
-	myBlock := &Block{time.Now().Unix(), transactions, prevBlockHash, []byte{}, 0, height}
-	pow := NewProofOfWork(myBlock)
+	block := &Block{time.Now().Unix(), transactions, prevBlockHash, []byte{}, 0, height}
+	pow := NewProofOfWork(block)
 	nonce, hash := pow.Run()
 
-	myBlock.Hash = hash[:]
-	myBlock.Nonce = nonce
+	block.Hash = hash[:]
+	block.Nonce = nonce
 
-	return myBlock
+	return block
 }
 
 // NewGenesisBlock creates and returns genesis Block

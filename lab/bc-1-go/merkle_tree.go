@@ -1,7 +1,7 @@
 package main
 
 import (
-	"crypto/sha512"
+	"crypto/sha256"
 )
 
 // MerkleTree represent a Merkle tree
@@ -50,11 +50,11 @@ func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
 	mNode := MerkleNode{}
 
 	if left == nil && right == nil {
-		hash := sha512.Sum512(data)
+		hash := sha256.Sum256(data)
 		mNode.Data = hash[:]
 	} else {
 		prevHashes := append(left.Data, right.Data...)
-		hash := sha512.Sum512(prevHashes)
+		hash := sha256.Sum256(prevHashes)
 		mNode.Data = hash[:]
 	}
 

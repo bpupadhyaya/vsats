@@ -6,39 +6,39 @@ import (
 	"log"
 )
 
-// TxOutput represents a transaction output
-type TxOutput struct {
-	Value         int
-	PublicKeyHash []byte
+// TXOutput represents a transaction output
+type TXOutput struct {
+	Value      int
+	PubKeyHash []byte
 }
 
 // Lock signs the output
-func (out *TxOutput) Lock(address []byte) {
-	publicKeyHash := Base58Decode(address)
-	publicKeyHash = publicKeyHash[1 : len(publicKeyHash)-4]
-	out.PublicKeyHash = publicKeyHash
+func (out *TXOutput) Lock(address []byte) {
+	pubKeyHash := Base58Decode(address)
+	pubKeyHash = pubKeyHash[1 : len(pubKeyHash)-4]
+	out.PubKeyHash = pubKeyHash
 }
 
-// IsLockedWithKey checks if the output can be used by the owner of the publicKey
-func (out *TxOutput) IsLockedWithKey(publicKeyHash []byte) bool {
-	return bytes.Compare(out.PublicKeyHash, publicKeyHash) == 0
+// IsLockedWithKey checks if the output can be used by the owner of the pubkey
+func (out *TXOutput) IsLockedWithKey(pubKeyHash []byte) bool {
+	return bytes.Compare(out.PubKeyHash, pubKeyHash) == 0
 }
 
-// NewTxOutput creates a new TxOutput
-func NewTxOutput(value int, address string) *TxOutput {
-	txOutput := &TxOutput{value, nil}
-	txOutput.Lock([]byte(address))
+// NewTXOutput create a new TXOutput
+func NewTXOutput(value int, address string) *TXOutput {
+	txo := &TXOutput{value, nil}
+	txo.Lock([]byte(address))
 
-	return txOutput
+	return txo
 }
 
-// TxOutputs is one or more TxOutput
-type TxOutputs struct {
-	Outputs []TxOutput
+// TXOutputs collects TXOutput
+type TXOutputs struct {
+	Outputs []TXOutput
 }
 
-// Serialize serializes TxOutputs
-func (outs TxOutputs) Serialize() []byte {
+// Serialize serializes TXOutputs
+func (outs TXOutputs) Serialize() []byte {
 	var buff bytes.Buffer
 
 	enc := gob.NewEncoder(&buff)
@@ -50,9 +50,9 @@ func (outs TxOutputs) Serialize() []byte {
 	return buff.Bytes()
 }
 
-// DeserializeOutputs deserializes TxOutputs
-func DeserializeOutputs(data []byte) TxOutputs {
-	var outputs TxOutputs
+// DeserializeOutputs deserializes TXOutputs
+func DeserializeOutputs(data []byte) TXOutputs {
+	var outputs TXOutputs
 
 	dec := gob.NewDecoder(bytes.NewReader(data))
 	err := dec.Decode(&outputs)

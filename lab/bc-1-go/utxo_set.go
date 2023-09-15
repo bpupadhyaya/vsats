@@ -2,12 +2,14 @@ package main
 
 import (
 	"encoding/hex"
-	"github.com/boltdb/bolt"
 	"log"
+
+	"github.com/boltdb/bolt"
 )
 
 const utxoBucket = "chainstate"
 
+// UTXOSet represents UTXO set
 type UTXOSet struct {
 	Blockchain *Blockchain
 }
@@ -44,8 +46,8 @@ func (u UTXOSet) FindSpendableOutputs(pubkeyHash []byte, amount int) (int, map[s
 }
 
 // FindUTXO finds UTXO for a public key hash
-func (u UTXOSet) FindUTXO(pubKeyHash []byte) []TxOutput {
-	var UTXOs []TxOutput
+func (u UTXOSet) FindUTXO(pubKeyHash []byte) []TXOutput {
+	var UTXOs []TXOutput
 	db := u.Blockchain.db
 
 	err := db.View(func(tx *bolt.Tx) error {
@@ -147,7 +149,7 @@ func (u UTXOSet) Update(block *Block) {
 		for _, tx := range block.Transactions {
 			if tx.IsCoinbase() == false {
 				for _, vin := range tx.Vin {
-					updatedOuts := TxOutputs{}
+					updatedOuts := TXOutputs{}
 					outsBytes := b.Get(vin.Txid)
 					outs := DeserializeOutputs(outsBytes)
 
@@ -172,7 +174,7 @@ func (u UTXOSet) Update(block *Block) {
 				}
 			}
 
-			newOutputs := TxOutputs{}
+			newOutputs := TXOutputs{}
 			for _, out := range tx.Vout {
 				newOutputs.Outputs = append(newOutputs.Outputs, out)
 			}

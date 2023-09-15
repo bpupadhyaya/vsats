@@ -4,16 +4,17 @@ import (
 	"bytes"
 )
 
-// TxInput represents a transaction input
-type TxInput struct {
+// TXInput represents a transaction input
+type TXInput struct {
 	Txid      []byte
 	Vout      int
 	Signature []byte
-	PublicKey []byte
+	PubKey    []byte
 }
 
 // UsesKey checks whether the address initiated the transaction
-func (in *TxInput) UsesKey(publicKeyHash []byte) bool {
-	lockingHash := HashPublicKey(in.PublicKey)
-	return bytes.Compare(lockingHash, publicKeyHash) == 0
+func (in *TXInput) UsesKey(pubKeyHash []byte) bool {
+	lockingHash := HashPubKey(in.PubKey)
+
+	return bytes.Compare(lockingHash, pubKeyHash) == 0
 }

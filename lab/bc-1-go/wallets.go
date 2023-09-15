@@ -12,32 +12,35 @@ import (
 
 const walletFile = "wallet_%s.dat"
 
-// Wallets is a collection of wallets
+// Wallets stores a collection of wallets
 type Wallets struct {
 	Wallets map[string]*Wallet
 }
 
-// NewWallets creates wallets and fills it from a file if the file exists
+// NewWallets creates Wallets and fills it from a file if it exists
 func NewWallets(nodeID string) (*Wallets, error) {
 	wallets := Wallets{}
 	wallets.Wallets = make(map[string]*Wallet)
+
 	err := wallets.LoadFromFile(nodeID)
 
 	return &wallets, err
 }
 
-// AddWallet adds a Wallet to wallets
-func (ws *Wallets) AddWallet() string {
+// CreateWallet adds a Wallet to Wallets
+func (ws *Wallets) CreateWallet() string {
 	wallet := NewWallet()
 	address := fmt.Sprintf("%s", wallet.GetAddress())
+
 	ws.Wallets[address] = wallet
 
 	return address
 }
 
-// GetAddresses returns an array of addresses stored in a wallet file
+// GetAddresses returns an array of addresses stored in the wallet file
 func (ws *Wallets) GetAddresses() []string {
 	var addresses []string
+
 	for address := range ws.Wallets {
 		addresses = append(addresses, address)
 	}
@@ -50,7 +53,7 @@ func (ws Wallets) GetWallet(address string) Wallet {
 	return *ws.Wallets[address]
 }
 
-// LoadFromFile loads wallets from a file
+// LoadFromFile loads wallets from the file
 func (ws *Wallets) LoadFromFile(nodeID string) error {
 	walletFile := fmt.Sprintf(walletFile, nodeID)
 	if _, err := os.Stat(walletFile); os.IsNotExist(err) {
@@ -63,13 +66,13 @@ func (ws *Wallets) LoadFromFile(nodeID string) error {
 	}
 
 	var wallets Wallets
-	gob.Register(elliptic.P521())
+	gob.Register(elliptic.P256())
 	decoder := gob.NewDecoder(bytes.NewReader(fileContent))
 	err = decoder.Decode(&wallets)
-
 	if err != nil {
 		log.Panic(err)
 	}
+
 	ws.Wallets = wallets.Wallets
 
 	return nil
@@ -79,7 +82,9 @@ func (ws *Wallets) LoadFromFile(nodeID string) error {
 func (ws Wallets) SaveToFile(nodeID string) {
 	var content bytes.Buffer
 	walletFile := fmt.Sprintf(walletFile, nodeID)
-	gob.Register(elliptic.P521())
+
+	gob.Register(elliptic.P256())
+
 	encoder := gob.NewEncoder(&content)
 	err := encoder.Encode(ws)
 	if err != nil {

@@ -2,23 +2,23 @@ package main
 
 import (
 	"encoding/hex"
-	"github.com/stretchr/testify/assert"
 	"log"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBase58(t *testing.T) {
-	rawHash := "e58c5c56363315756ec02288eb586bdae67747dd1af0326e"
+	rawHash := "00010966776006953D5567439E5E39F86A0D273BEED61967F6"
 	hash, err := hex.DecodeString(rawHash)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	encoded := Base58Encode(hash)
-	assert.Equal(t, "MvjtMw3QBmHfoKvUBqPfQ7csiR1LLwU49", string(encoded))
+	assert.Equal(t, "16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM", string(encoded))
 
-	decoded := Base58Decode([]byte("MvjtMw3QBmHfoKvUBqPfQ7csiR1LLwU49"))
-	assert.Equal(t, strings.ToLower("e58c5c56363315756ec02288eb586bdae67747dd1af0326e"), hex.EncodeToString(decoded))
-
+	decoded := Base58Decode([]byte("16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM"))
+	assert.Equal(t, strings.ToLower("00010966776006953D5567439E5E39F86A0D273BEED61967F6"), hex.EncodeToString(decoded))
 }

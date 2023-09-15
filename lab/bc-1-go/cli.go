@@ -4,15 +4,15 @@ import (
 	"flag"
 	"fmt"
 	"log"
+
 	"os"
 )
 
-// CLI is responsible for processing command line arguments
-
+// CLI responsible for processing command line arguments
 type CLI struct{}
 
 func (cli *CLI) printUsage() {
-	fmt.Println("CLI Usage: ")
+	fmt.Println("Usage:")
 	fmt.Println("  createblockchain -address ADDRESS - Create a blockchain and send genesis block reward to ADDRESS")
 	fmt.Println("  createwallet - Generates a new key-pair and saves it into the wallet file")
 	fmt.Println("  getbalance -address ADDRESS - Get balance of ADDRESS")
@@ -152,5 +152,4 @@ func (cli *CLI) Run() {
 		}
 		cli.startNode(nodeID, *startNodeMiner)
 	}
-
 }

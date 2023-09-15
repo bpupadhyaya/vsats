@@ -16,12 +16,12 @@ const targetBits = 16
 
 // ProofOfWork represents a proof-of-work
 type ProofOfWork struct {
-	block  *block
+	block  *Block
 	target *big.Int
 }
 
 // NewProofOfWork builds and returns a ProofOfWork
-func NewProofOfWork(b *block) *ProofOfWork {
+func NewProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
 	target.Lsh(target, uint(256-targetBits))
 

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/boltdb/bolt"
 	"log"
+
+	"github.com/boltdb/bolt"
 )
 
 // BlockchainIterator is used to iterate over blockchain blocks
